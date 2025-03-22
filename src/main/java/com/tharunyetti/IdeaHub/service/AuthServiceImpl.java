@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponse authenticate(AuthRequest authRequest) {
+    public String authenticate(AuthRequest authRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
 
@@ -67,11 +67,11 @@ public class AuthServiceImpl implements AuthService {
                 .email(user.getEmail())
                 .build();
 
-        String token = jwtUtil.generateToken(userDetails);
-        return new AuthResponse(token);
+        String token = jwtUtil.generateToken(user);
+        return token;
     }
 
-    public AuthResponse processGoogleUser(OAuth2User oauthUser) {
+    public String processGoogleUser(OAuth2User oauthUser) {
         String email = oauthUser.getAttribute("email");
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -91,7 +91,7 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         // return jwtTokenProvider.generateToken(user);
-        String token = jwtUtil.generateToken(userOAuthDetails);
-        return new AuthResponse(token);
+        String token = jwtUtil.generateToken(user);
+        return token;
     }
 }

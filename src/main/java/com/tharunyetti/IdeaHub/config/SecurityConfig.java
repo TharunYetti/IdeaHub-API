@@ -37,8 +37,9 @@ public class SecurityConfig {
                 // .anyRequest().permitAll() // Allow all requests
                 // );
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/api/auth/**", "/oauth2/**").permitAll()
-                        .anyRequest().authenticated())
+                        // .requestMatchers("/", "/api/auth/**", "/oauth2/**").permitAll()
+                        // .anyRequest().authenticated())
+                        .anyRequest().permitAll()) // Allow all requests for testing purpose, remove at the end
                 .formLogin(Customizer.withDefaults())
                 .oauth2Login(oauth2 -> oauth2
                         .defaultSuccessUrl("/api/auth/google/success", true)

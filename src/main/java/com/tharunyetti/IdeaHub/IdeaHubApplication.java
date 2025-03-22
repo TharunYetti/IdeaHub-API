@@ -11,7 +11,7 @@ public class IdeaHubApplication {
 
 		Dotenv dotenv = Dotenv.load();
 		System.setProperty("CLIENT-ID", dotenv.get("CLIENT-ID"));
-		System.setProperty("CLIENT-SECRET", dotnev.get("CLIENT-SECRET"));
+		System.setProperty("CLIENT-SECRET", dotenv.get("CLIENT-SECRET"));
 		System.setProperty("DB-USER", dotenv.get("DB-USER"));
 		System.setProperty("DB-PWD", dotenv.get("DB-PWD"));
 

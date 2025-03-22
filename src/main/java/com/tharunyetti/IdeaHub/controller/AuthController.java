@@ -4,6 +4,8 @@ import com.tharunyetti.IdeaHub.service.AuthService;
 import com.tharunyetti.IdeaHub.utility.AuthRequest;
 import com.tharunyetti.IdeaHub.utility.AuthResponse;
 import com.tharunyetti.IdeaHub.utility.UserDetails;
+
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +32,28 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
-        return ResponseEntity.ok(authService.authenticate(authRequest));
+    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
+        String token = authService.authenticate(authRequest);
+         // Create a secure HttpOnly cookie
+        Cookie cookie = new Cookie("jwt", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true); // Set to true in production (HTTPS required)
+        cookie.setPath("/"); // Accessible across all endpoints
+        cookie.setMaxAge(60 * 60 * 12); // 1 hour expiration
+        return ResponseEntity.ok(token);
     }
 
     @GetMapping("/google/success")
-    public ResponseEntity<AuthResponse> googleLoginSuccess(@AuthenticationPrincipal OAuth2User principal) {
+    public ResponseEntity<String> googleLoginSuccess(@AuthenticationPrincipal OAuth2User principal) {
+        
+        String token = authService.processGoogleUser(principal);
+         // Create a secure HttpOnly cookie
+        Cookie cookie = new Cookie("jwt", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true); // Set to true in production (HTTPS required)
+        cookie.setPath("/"); // Accessible across all endpoints
+        cookie.setMaxAge(60 * 60 * 12); // 1 hour expiration
+        
         return ResponseEntity.ok(authService.processGoogleUser(principal));
     }
 
