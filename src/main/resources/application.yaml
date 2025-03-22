@@ -1,0 +1,29 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: IDEA-HUB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/IdeaHub
+    username: postgres
+    password: ${DB-PWD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${CLIENT-ID}
+            client-secret: ${CLIENT-SECRET}
+            scope: profile, email
+        # provider:
+        #   google:
+        #     authorization-uri: https://accounts.google.com/o/oauth2/auth
+        #     token-uri: https://oauth2.googleapis.com/token
+        #     user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+        #     user-name-attribute: sub
