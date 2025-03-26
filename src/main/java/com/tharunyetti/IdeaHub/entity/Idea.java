@@ -23,6 +23,10 @@ public class Idea {
     private String description;
 
     private Long createdBy;
+    
+    @Lob
+    @Column(columnDefinition = "BYTEA")
+    private byte[] image;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
