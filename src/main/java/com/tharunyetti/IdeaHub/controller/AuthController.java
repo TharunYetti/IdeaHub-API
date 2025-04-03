@@ -2,7 +2,6 @@ package com.tharunyetti.IdeaHub.controller;
 
 import com.tharunyetti.IdeaHub.service.AuthService;
 import com.tharunyetti.IdeaHub.utility.AuthRequest;
-import com.tharunyetti.IdeaHub.utility.AuthResponse;
 import com.tharunyetti.IdeaHub.utility.UserDetails;
 
 import jakarta.servlet.http.Cookie;
@@ -34,10 +33,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
         String token = authService.authenticate(authRequest);
+        System.out.println(token);
          // Create a secure HttpOnly cookie
         Cookie cookie = new Cookie("jwt", token);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true); // Set to true in production (HTTPS required)
+        cookie.setSecure(false); // Set to true in production (HTTPS required)
         cookie.setPath("/"); // Accessible across all endpoints
         cookie.setMaxAge(60 * 60 * 12); // 1 hour expiration
         return ResponseEntity.ok(token);
@@ -50,7 +50,7 @@ public class AuthController {
          // Create a secure HttpOnly cookie
         Cookie cookie = new Cookie("jwt", token);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true); // Set to true in production (HTTPS required)
+        cookie.setSecure(false); // Set to true in production (HTTPS required)
         cookie.setPath("/"); // Accessible across all endpoints
         cookie.setMaxAge(60 * 60 * 12); // 1 hour expiration
         
