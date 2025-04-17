@@ -9,7 +9,7 @@ public class IdeaHubApplication {
 
 	public static void main(String[] args) {
 
-		Dotenv dotenv = Dotenv.load();
+		// Dotenv dotenv = Dotenv.load();
 		System.setProperty("CLIENT-ID", System.getenv("CLIENT-ID"));
 		System.setProperty("CLIENT-SECRET", System.getenv("CLIENT-SECRET"));
 		System.setProperty("DB-USER", System.getenv("DB-USER"));
