@@ -2,6 +2,7 @@ package com.tharunyetti.IdeaHub.controller;
 
 import com.tharunyetti.IdeaHub.service.AuthService;
 import com.tharunyetti.IdeaHub.utility.AuthRequest;
+import com.tharunyetti.IdeaHub.utility.AuthResponse;
 import com.tharunyetti.IdeaHub.utility.UserDetails;
 
 import jakarta.servlet.http.Cookie;
@@ -31,16 +32,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AuthRequest authRequest) {
-        String token = authService.authenticate(authRequest);
-        System.out.println(token);
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
+        AuthResponse authResponse = authService.authenticate(authRequest);
+        System.out.println(authResponse);
          // Create a secure HttpOnly cookie
-        Cookie cookie = new Cookie("jwt", token);
+        Cookie cookie = new Cookie("jwt", authResponse.getToken());
         cookie.setHttpOnly(true);
         cookie.setSecure(false); // Set to true in production (HTTPS required)
         cookie.setPath("/"); // Accessible across all endpoints
         cookie.setMaxAge(60 * 60 * 12); // 1 hour expiration
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(authResponse);
     }
 
     @GetMapping("/google/success")

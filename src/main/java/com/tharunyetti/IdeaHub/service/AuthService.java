@@ -9,7 +9,7 @@ import com.tharunyetti.IdeaHub.utility.UserDetails;
 public interface AuthService {
     String registerUser(UserDetails userDetails);
 
-    String authenticate(AuthRequest authRequest);
+    AuthResponse authenticate(AuthRequest authRequest);
 
     String processGoogleUser(OAuth2User oauthUser);
 }
