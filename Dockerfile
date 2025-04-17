@@ -2,7 +2,7 @@
 FROM openjdk:17
 
 # Set working directory
-WORKDIR /app
+WORKDIR /src
 
 # Copy Maven files and build the app
 COPY . .
