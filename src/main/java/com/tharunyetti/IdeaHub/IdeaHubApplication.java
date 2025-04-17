@@ -10,10 +10,10 @@ public class IdeaHubApplication {
 	public static void main(String[] args) {
 
 		Dotenv dotenv = Dotenv.load();
-		System.setProperty("CLIENT-ID", dotenv.get("CLIENT-ID"));
-		System.setProperty("CLIENT-SECRET", dotenv.get("CLIENT-SECRET"));
-		System.setProperty("DB-USER", dotenv.get("DB-USER"));
-		System.setProperty("DB-PWD", dotenv.get("DB-PWD"));
+		System.setProperty("CLIENT-ID", System.getenv("CLIENT-ID"));
+		System.setProperty("CLIENT-SECRET", System.getenv("CLIENT-SECRET"));
+		System.setProperty("DB-USER", System.getenv("DB-USER"));
+		System.setProperty("DB-PWD", System.getenv("DB-PWD"));
 
 		SpringApplication.run(IdeaHubApplication.class, args);
 	}
