@@ -24,9 +24,8 @@ public class Idea {
 
     private Long createdBy;
     
-    @Lob
-    @Column(columnDefinition = "BYTEA")
-    private byte[] image;
+    @Column(name = "image", columnDefinition = "TEXT")
+    private String image;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

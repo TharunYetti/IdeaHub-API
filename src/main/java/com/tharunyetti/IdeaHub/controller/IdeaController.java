@@ -39,7 +39,6 @@ public class IdeaController {
     @PostMapping
     public Idea createIdea(@RequestBody IdeaDetails ideaDetails, HttpServletRequest request) {
         String token = extractJwtFromCookie(request);
-
         if (token == null) {
             return new Idea();
         }

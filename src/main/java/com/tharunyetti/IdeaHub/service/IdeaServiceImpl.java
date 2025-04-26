@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,18 +34,19 @@ public class IdeaServiceImpl implements IdeaService{
     // }
 
     public Idea createIdea(IdeaDetails ideaDetails, String token){
-        MultipartFile imageFile = ideaDetails.getImage();
-        byte[] imageToStore = null;
-        try{
-            if(imageFile!=null && !imageFile.isEmpty()){
-                imageToStore = imageFile.getBytes();
-           }
-        }catch(IOException e){
-            imageToStore = null;
-        }
+        // MultipartFile imageFile = ideaDetails.getImage();
+        // byte[] imageToStore = null;
+        // try{
+        //     if(imageFile!=null && !imageFile.isEmpty()){
+        //         imageToStore = imageFile.getBytes();
+        //    }
+        // }catch(IOException e){
+        //     imageToStore = null;
+        // }
         Idea idea = Idea.builder()
         .title(ideaDetails.getTitle())
         .description(ideaDetails.getDescription())
+        .image(ideaDetails.getImage())
         .createdBy(jwtUtil.getUserId(token))
         .build();
         return ideaRepository.save(idea);

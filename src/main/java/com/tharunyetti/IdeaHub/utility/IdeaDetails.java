@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class IdeaDetails {
     private String title;
     private String description;
-    private MultipartFile image;
+    private String image;
 }
