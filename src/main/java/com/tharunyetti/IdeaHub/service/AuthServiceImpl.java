@@ -10,6 +10,7 @@ import com.tharunyetti.IdeaHub.utility.UserDetails;
 import com.tharunyetti.IdeaHub.utility.UserOAuthDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -57,22 +59,24 @@ public class AuthServiceImpl implements AuthService {
 
         User user = userRepository.findByEmail(authRequest.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
+        System.out.println(user);
         // Check if the entered password matches the stored password
         if (!passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            // throw new RuntimeException("Invalid password");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid Password");
+
         }
 
         UserDetails userDetails = UserDetails.builder().username(user.getUsername())
                 .password(user.getPassword())
                 .email(user.getEmail())
-                .role(user.getRole())
                 .build();
 
         String token = jwtUtil.generateToken(user);
         AuthResponse authResponse = AuthResponse.builder()
             .token(token)
             .user(userDetails)
+            .id(user.getId())
             .build();
         return authResponse;
     }

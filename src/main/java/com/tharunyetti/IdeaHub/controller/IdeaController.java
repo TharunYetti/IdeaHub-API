@@ -2,6 +2,7 @@ package com.tharunyetti.IdeaHub.controller;
 
 import com.tharunyetti.IdeaHub.entity.Idea;
 import com.tharunyetti.IdeaHub.service.IdeaService;
+import com.tharunyetti.IdeaHub.service.IdeaServiceImpl;
 import com.tharunyetti.IdeaHub.utility.IdeaDetails;
 import com.tharunyetti.IdeaHub.utility.JwtUtil;
 
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @RestController
 @RequestMapping("/api/idea")
 public class IdeaController {
@@ -23,6 +27,8 @@ public class IdeaController {
     private IdeaService ideaService;
     @Autowired
     private JwtUtil jwtUtil;
+
+    private static final Logger logger = LogManager.getLogger(IdeaServiceImpl.class);
 
     private String extractJwtFromCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
@@ -48,6 +54,7 @@ public class IdeaController {
 
     @GetMapping
     public List<Idea> getAllIdeas() {
+        logger.info("Collecting all ideas!");
         return ideaService.getAllIdeas();
     }
 

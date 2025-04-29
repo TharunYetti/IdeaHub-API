@@ -14,12 +14,17 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Service
 public class IdeaServiceImpl implements IdeaService{
     @Autowired
     private IdeaRepository ideaRepository;
     @Autowired
     private JwtUtil jwtUtil;
+
+    private static final Logger logger = LogManager.getLogger(IdeaServiceImpl.class);
 
     // private String extractJwtFromCookie(HttpServletRequest request) {
     //     Cookie[] cookies = request.getCookies();
@@ -53,6 +58,7 @@ public class IdeaServiceImpl implements IdeaService{
     }
 
     public List<Idea> getAllIdeas() {
+        logger.info("Fetching all ideas!");
         return ideaRepository.findAll();
     }
 
